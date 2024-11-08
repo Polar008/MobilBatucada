@@ -5,35 +5,52 @@ using UnityEngine;
 public class ImputHandler : MonoBehaviour
 {
     [SerializeField] NoteSpawner ns;
+
+    private void Start()
+    {
+        
+    }
     void Update()
     {
+        // Cache the main camera once for efficiency
+
+        // Handle touch input
         for (int i = 0; i < Input.touchCount; i++)
         {
             Touch touch = Input.GetTouch(i);
 
-            // Check if the current touch just began
             if (touch.phase == TouchPhase.Began)
             {
-                // Create a ray from the touch position
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit hit;
+                HandleInput(touch.position);
+            }
+        }
 
-                // Check if the ray hits the GameObject's collider
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.transform.tag == "Drum")
-                    {
-                        ns.PlayDrum();
-                    }
-                    if (hit.transform.tag == "Drumstick")
-                    {
-                        ns.PlayDrumstick();
-                    }
-                    if (hit.transform.tag == "DrumSide")
-                    {
-                        ns.PlayDrumSide();
-                    }
-                }
+        // Handle mouse input for non-touch devices
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleInput(Input.mousePosition);
+        }
+    }
+
+    // Method to handle both touch and mouse input
+    void HandleInput(Vector3 inputPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(inputPosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.CompareTag("Drum"))
+            {
+                ns.PlayDrum();
+            }
+            else if (hit.transform.CompareTag("Drumstick"))
+            {
+                ns.PlayDrumstick();
+            }
+            else if (hit.transform.CompareTag("DrumSide"))
+            {
+                ns.PlayDrumSide();
             }
         }
     }

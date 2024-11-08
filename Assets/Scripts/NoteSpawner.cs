@@ -80,7 +80,7 @@ public class NoteSpawner : MonoBehaviour
         Debug.Log("Drum");
         if (Vector2.Distance(drumNotes[0].position, correctDrum.position) <= margin)
         {
-            Destroy(drumNotes[0]);
+            Destroy(drumNotes[0].gameObject);
             drumNotes.RemoveAt(0);
         }
     }
@@ -90,7 +90,7 @@ public class NoteSpawner : MonoBehaviour
         Debug.Log("Stick");
         if (Vector2.Distance(drumstickNotes[0].position, correctDrumstick.position) <= margin)
         {
-            Destroy(drumstickNotes[0]);
+            Destroy(drumstickNotes[0].gameObject);
             drumstickNotes.RemoveAt(0);
         }
     }
@@ -100,7 +100,7 @@ public class NoteSpawner : MonoBehaviour
         Debug.Log("Side");
         if (Vector2.Distance(drumSideNotes[0].position, correctDrumSide.position) <= margin)
         {
-            Destroy(drumSideNotes[0]);
+            Destroy(drumSideNotes[0].gameObject);
             drumSideNotes.RemoveAt(0);
         }
     }
