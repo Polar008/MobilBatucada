@@ -15,6 +15,8 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] Transform pointADrumSide;
     [SerializeField] Transform pointBDrumSide;
     [SerializeField] Transform correctDrumSide;
+    [SerializeField] List<AudioSource> audioSources;
+    [SerializeField] ParticleSystem psDrum;
     List<Transform> drumNotes = new List<Transform>();
     List<Transform> drumstickNotes = new List<Transform>();
     List<Transform> drumSideNotes = new List<Transform>();
@@ -78,30 +80,41 @@ public class NoteSpawner : MonoBehaviour
     public void PlayDrum()
     {
         Debug.Log("Drum");
-        if (Vector2.Distance(drumNotes[0].position, correctDrum.position) <= margin)
+        audioSources[0].pitch = 3;
+        if (drumNotes.Count > 0 && Vector2.Distance(drumNotes[0].position, correctDrum.position) <= margin)
         {
             Destroy(drumNotes[0].gameObject);
             drumNotes.RemoveAt(0);
+            audioSources[0].pitch = 1;
+            psDrum.Emit(30);
         }
+        audioSources[0].Play();
     }
 
     public void PlayDrumstick()
     {
         Debug.Log("Stick");
+        audioSources[1].pitch = 3;
         if (Vector2.Distance(drumstickNotes[0].position, correctDrumstick.position) <= margin)
         {
             Destroy(drumstickNotes[0].gameObject);
             drumstickNotes.RemoveAt(0);
+            audioSources[1].pitch = 1;
+            
         }
+        audioSources[1].Play();
     }
 
     public void PlayDrumSide()
     {
         Debug.Log("Side");
+        audioSources[2].pitch = 3;
         if (Vector2.Distance(drumSideNotes[0].position, correctDrumSide.position) <= margin)
         {
             Destroy(drumSideNotes[0].gameObject);
             drumSideNotes.RemoveAt(0);
+            audioSources[2].pitch = 1;
         }
+        audioSources[2].Play();
     }
 }
